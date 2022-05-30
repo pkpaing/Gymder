@@ -24,7 +24,7 @@ class App extends Component {
             <Route exact path="/profile" component={ProfilePage} />
             <Route exact path="/match" component={MatchPage} />
             <Route exact path="/preference" component={PreferencePage} />
-            <Route exact path="/chat" component={PreferencePage} />
+            <Route exact path="/chat" component={ChatPage} />
           </div>
         </Router>
     );
