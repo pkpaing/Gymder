@@ -6,6 +6,10 @@ import Landing from "./components/layout/Landing";
 import Register from "./components/auth/Register";
 import Login from "./components/auth/Login";
 import Dashboard from "./components/dashboard/Dashboard";
+import ProfilePage from "./components/dashboard/ProfilePage";
+import MatchPage from "./components/dashboard/MatchPage";
+import PreferencePage from "./components/dashboard/PreferencePage";
+import ChatPage from "./components/dashboard/ChatPage";
 
 class App extends Component {
   render() {
@@ -17,6 +21,10 @@ class App extends Component {
             <Route exact path="/register" component={Register} />
             <Route exact path="/login" component={Login} />
             <Route exact path="/dashboard" component={Dashboard} />
+            <Route exact path="/profile" component={ProfilePage} />
+            <Route exact path="/match" component={MatchPage} />
+            <Route exact path="/preference" component={PreferencePage} />
+            <Route exact path="/chat" component={PreferencePage} />
           </div>
         </Router>
     );

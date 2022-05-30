@@ -17,6 +17,7 @@ class Dashboard extends Component {
                   What would you like to do?
                 </p>
                 <br />
+                <Link to="/profile">
                 <button
                   style={{
                     width: "250px",
@@ -31,6 +32,8 @@ class Dashboard extends Component {
                 >
                   View Profile
                 </button>
+                </Link>
+                <Link to="/match">
                 <button
                   style={{
                     width: "250px",
@@ -38,13 +41,15 @@ class Dashboard extends Component {
                     letterSpacing: "1.5px",
                     marginTop: "1rem",
                     position: "absolute",
-                    right: 72
+                    right: 720
                   }}
                   type="submit"
                   className="btn btn-large waves-effect waves-light hoverable blue accent-3"
                 >
                   Find Matches
                 </button>
+                </Link>
+                <Link to="/preference">
                 <button
                   style={{
                     width: "250px",
@@ -59,6 +64,8 @@ class Dashboard extends Component {
                 >
                   Set Preferences
                 </button>
+                </Link>
+                <Link to="/chat">
                 <button
                   style={{
                     width: "250px",
@@ -73,6 +80,7 @@ class Dashboard extends Component {
                 >
                   View Chats
                 </button>
+                </Link>
               </div>
             </div>
           </div>
