@@ -12,7 +12,8 @@ const Onboarding = () => {
     age: "",
     gym_location: "north",
     training_type: "",
-    gender_identity: "male",
+    years_experience: "",
+    gender_identity: "Male",
     url1: "",
     about: "",
     matches: [],
@@ -142,13 +143,24 @@ const Onboarding = () => {
               onChange={handleChange}
             />
 
+            <label>Years of Experience</label>
+            <input
+              id="years_experience"
+              type="number"
+              name="years_experience"
+              placeholder="... "
+              required={true}
+              value={formData.years_experience}
+              onChange={handleChange}
+            />
+
             <label>Gender</label>
             <div className="multiple-input-container">
               <input
                 id="man-gender-identity"
                 type="radio"
                 name="gender_identity"
-                value={"male"}
+                value={"Male"}
                 onChange={handleChange}
                 checked={formData.gender_identity === "male"}
               />
@@ -158,7 +170,7 @@ const Onboarding = () => {
                 id="woman-gender-identity"
                 type="radio"
                 name="gender_identity"
-                value={"female"}
+                value={"Female"}
                 onChange={handleChange}
                 checked={formData.gender_identity === "female"}
               />
