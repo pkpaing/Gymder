@@ -3,12 +3,16 @@ import { useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
 import ChatContainer from "../components/ChatContainer";
 import axios from "axios";
+import MoreInfo from "../components/MoreInfo";
+import MyProfile from "../components/MyProfile";
 
 const Dashboard = () => {
   const [user, setUser] = useState(null);
   const [filteredUsers, setFilteredUsers] = useState(null);
   const [cookies, setCookie, removeCookie] = useCookies(["user"]);
   const [lastDirection, setLastDirection] = useState();
+  const [showInfo, setShowInfo] = useState(false);
+  const [showProfile, setShowProfile] = useState(false);
 
   const userId = cookies.UserId;
 
@@ -104,12 +108,25 @@ const Dashboard = () => {
     (filteredUser) => !matchedUserIds.includes(filteredUser.user_id)
   );
 
+  const handleClickInfo = () => {
+    console.log("clicked");
+    setShowInfo(true);
+  };
+
+  const handleClickProfile = () => {
+    console.log("clicked");
+    setShowProfile(true);
+  };
+
   return (
     <>
       {user && (
         <div className="dashboard">
           <ChatContainer user={user} />
           <div className="swipe-container">
+            <button className="quartenary-button" onClick={handleClickProfile}>
+              View My Profile
+            </button>
             <div className="card-container">
               {filteredUsers2?.map((character) => (
                 <TinderCard
@@ -123,6 +140,12 @@ const Dashboard = () => {
                     className="card"
                   >
                     <h3>{character.first_name}</h3>
+                    <button
+                      className="tertiary-button"
+                      onClick={handleClickInfo}
+                    >
+                      More Info
+                    </button>
                   </div>
                 </TinderCard>
               ))}
@@ -132,6 +155,8 @@ const Dashboard = () => {
               </div>
             </div>
           </div>
+          {showInfo && <MoreInfo setShowInfo={setShowInfo} />}
+          {showProfile && <MyProfile setShowProfile={setShowProfile} />}
         </div>
       )}
     </>

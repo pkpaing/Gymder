@@ -140,6 +140,7 @@ app.put("/user", async (req, res) => {
         age: formData.age,
         gym_location: formData.gym_location,
         training_type: formData.training_type,
+        years_experience: formData.years_experience,
         gender_identity: formData.gender_identity,
         url1: formData.url1,
         about: formData.about,

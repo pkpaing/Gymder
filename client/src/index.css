@@ -45,6 +45,40 @@ h2 {
     border: solid 2px rgb(48, 48, 48);
 }
 
+.tertiary-button {
+    color: #fff;
+    position: relative;
+    top: 550px;
+    text-transform: uppercase;
+    font-size: 15px;
+    background: linear-gradient(45deg, #fe3072, #ff5940); 
+    padding: 12px 30px;
+    border-radius: 30px;
+    border: none; 
+}
+
+.tertiary-button:hover {
+    color: rgb(48, 48, 48);;
+}
+
+.quartenary-button {
+    color: #fff;
+    position: relative;
+    left: 420px;
+    width: 120px;
+    height: 60px;
+    text-transform: uppercase;
+    font-size: 13px;
+    background: linear-gradient(45deg, #fe3072, #ff5940);
+    padding: 12px 30px;
+    border-radius: 30px;
+    border: none; 
+}
+
+.quartenary-button:hover {
+    background: linear-gradient(260deg, #fe3072,  #ff5940);
+}
+
 .primary-title{
     font-size: 120px;
     color: rgb(255, 255, 255);
@@ -250,8 +284,73 @@ nav .logo-container .logo{
 
 .dashboard .swipe-info {
     position: absolute;
+    left: 580px;
     bottom: 0;
     padding: 10px;
+}
+
+.more-info {
+    position: fixed;
+    top: 80px;
+    left: 715px;
+    width: 360px;
+    height: 500px;
+    background-color: rgb(255, 255, 255);
+    border-radius: 10px;
+    padding: 40px;
+    border: solid 0.5px;
+}
+
+.more-info .info-close-icon {
+    float: right;
+}
+
+.my-profile {
+    position: fixed;
+    top: 80px;
+    left: 715px;
+    width: 360px;
+    height: 500px;
+    background-color: rgb(255, 255, 255);
+    border-radius: 10px;
+    padding: 40px;
+    border: solid 0.5px;
+}
+
+.my-profile .profile-close-icon {
+    float: right;
+}
+
+.my-profile .profile-img-container {
+    height: 125px;
+    width: 125px;
+    border-radius: 10px;
+    overflow: hidden;
+    margin: 10px;
+}
+
+.my-profile .profile-img-container img {
+    width: 100%;
+}
+
+.my-profile .about {
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    width: 100%;
+    text-align: start;
+    font-size: 19px;
+    font-weight: 100;
+}
+
+.my-profile .info {
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    width: 100%;
+    text-align: start;
+    font-size: 19px;
+    white-space: pre-line;
 }
 
 /*-------- Chat Container --------*/
@@ -294,11 +393,11 @@ nav .logo-container .logo{
 }
 
 .img-container {
-    height: 30px;
-    width: 30px;
-    border-radius: 15px;
+    height: 50px;
+    width: 50px;
+    border-radius: 100px;
     overflow: hidden;
-    margin: 10px;
+    margin: 15px;
 }
 
 .img-container img {
