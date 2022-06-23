@@ -9,12 +9,14 @@ import MyProfile from "../components/MyProfile";
 const Dashboard = () => {
   const [user, setUser] = useState(null);
   const [filteredUsers, setFilteredUsers] = useState(null);
+  const [cardUser, setCardUser] = useState(null);
   const [cookies, setCookie, removeCookie] = useCookies(["user"]);
   const [lastDirection, setLastDirection] = useState();
   const [showInfo, setShowInfo] = useState(false);
   const [showProfile, setShowProfile] = useState(false);
 
   const userId = cookies.UserId;
+  let cardCounter = 1;
 
   const getUser = async () => {
     try {
@@ -48,8 +50,6 @@ const Dashboard = () => {
     }
   }, [user]);
 
-  console.log(filteredUsers);
-
   const updateMatches = async (matchedUserId) => {
     try {
       await axios.put("http://localhost:8000/addmatch", {
@@ -60,40 +60,6 @@ const Dashboard = () => {
     } catch (error) {
       console.log(error);
     }
-  };
-
-  console.log(user);
-
-  // const characters = [
-  //   {
-  //     name: "Richard Hendricks",
-  //     url: "https://1.bp.blogspot.com/-uz5_c0ykTag/YTYu3s8Q0JI/AAAAAAAFnIM/gdp3aVr-FboVo5cgcIg-q2cDzkHY_NdfgCLcBGAsYHQ/s1080/t.cj_241314526_2541523005994215_6246061663947068609_n.jpg",
-  //   },
-  //   {
-  //     name: "Jared Dunn",
-  //     url: "https://www.redsports.sg/wp-content/uploads/2016/03/WaterPolo_BDiv_Boys_ACSI_OSS-7.jpg",
-  //   },
-  //   {
-  //     name: "Monica Hall",
-  //     url: "https://1.bp.blogspot.com/-uz5_c0ykTag/YTYu3s8Q0JI/AAAAAAAFnIM/gdp3aVr-FboVo5cgcIg-q2cDzkHY_NdfgCLcBGAsYHQ/s1080/t.cj_241314526_2541523005994215_6246061663947068609_n.jpg",
-  //   },
-  //   {
-  //     name: "Chris Chan",
-  //     url: "https://www.redsports.sg/wp-content/uploads/2016/03/WaterPolo_BDiv_Boys_ACSI_OSS-7.jpg",
-  //   },
-  //   {
-  //     name: "Oliver Loo",
-  //     url: "https://1.bp.blogspot.com/-uz5_c0ykTag/YTYu3s8Q0JI/AAAAAAAFnIM/gdp3aVr-FboVo5cgcIg-q2cDzkHY_NdfgCLcBGAsYHQ/s1080/t.cj_241314526_2541523005994215_6246061663947068609_n.jpg",
-  //   },
-  // ];
-
-  const swiped = (direction, swipedUserId) => {
-    console.log("removing: " + swipedUserId);
-
-    if (direction === "right") {
-      updateMatches(swipedUserId);
-    }
-    setLastDirection(direction);
   };
 
   const outOfFrame = (name) => {
@@ -117,6 +83,21 @@ const Dashboard = () => {
     console.log("clicked");
     setShowProfile(true);
   };
+
+  const swiped = (direction, swipedUserId) => {
+    console.log("removing: " + swipedUserId);
+
+    if (direction === "right") {
+      updateMatches(swipedUserId);
+    }
+    setLastDirection(direction);
+    cardCounter++;
+    setCardUser(filteredUsers2[filteredUsers2.length - cardCounter]);
+  };
+
+  if (filteredUsers2) {
+    console.log("cardUser", cardUser);
+  }
 
   return (
     <>
@@ -155,8 +136,15 @@ const Dashboard = () => {
               </div>
             </div>
           </div>
-          {showInfo && <MoreInfo setShowInfo={setShowInfo} />}
           {showProfile && <MyProfile setShowProfile={setShowProfile} />}
+          {showInfo && (
+            <MoreInfo
+              setShowInfo={setShowInfo}
+              cardUser={cardUser}
+              filteredUsers={filteredUsers2}
+              setCardUser={setCardUser}
+            />
+          )}
         </div>
       )}
     </>
