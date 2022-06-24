@@ -1,0 +1,17 @@
+{
+  "files": {
+    "main.css": "/static/css/main.6a39c168.css",
+    "main.js": "/static/js/main.f7845668.js",
+    "static/js/787.4cb813d1.chunk.js": "/static/js/787.4cb813d1.chunk.js",
+    "static/media/bgimage.jpeg": "/static/media/bgimage.8bf3a62f23ee0ff9a8a6.jpeg",
+    "static/media/GymderIcon.png": "/static/media/GymderIcon.82a87b9c6ace4a6d2cb4.png",
+    "index.html": "/index.html",
+    "main.6a39c168.css.map": "/static/css/main.6a39c168.css.map",
+    "main.f7845668.js.map": "/static/js/main.f7845668.js.map",
+    "787.4cb813d1.chunk.js.map": "/static/js/787.4cb813d1.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.6a39c168.css",
+    "static/js/main.f7845668.js"
+  ]
+}
