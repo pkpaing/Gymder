@@ -1,10 +1,10 @@
-const PORT = 8000;
 const express = require("express");
 const { MongoClient } = require("mongodb");
 const { v4: uuidv4 } = require("uuid");
 const jwt = require("jsonwebtoken");
 const cors = require("cors");
 const bcrypt = require("bcrypt");
+require("dotenv").config();
 
 const uri =
   "mongodb+srv://pkpaing:gymder123@cluster0.4ta7f.mongodb.net/Cluster0?retryWrites=true&w=majority";
@@ -156,6 +156,21 @@ app.put("/user", async (req, res) => {
   }
 });
 
+app.get("/read", async (req, res) => {
+  const client = new MongoClient(uri);
+
+  try {
+    await client.connect();
+    const database = client.db("app-data");
+    const users = database.collection("users");
+
+    const returnedUsers = await users.find().toArray();
+    res.send(returnedUsers);
+  } finally {
+    await client.close();
+  }
+});
+
 app.get("/users", async (req, res) => {
   const client = new MongoClient(uri);
   const userIds = JSON.parse(req.query.userIds);
@@ -239,4 +254,6 @@ app.post("/message", async (req, res) => {
   }
 });
 
-app.listen(PORT, () => console.log("Server running on PORT " + PORT));
+app.listen(process.env.PORT, () =>
+  console.log("Server running on PORT " + process.env.PORT)
+);

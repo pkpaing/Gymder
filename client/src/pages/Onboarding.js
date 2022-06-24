@@ -25,7 +25,7 @@ const Onboarding = () => {
     console.log("submitted");
     e.preventDefault();
     try {
-      const response = await axios.put("http://localhost:8000/user", {
+      const response = await axios.put("https://gymder.herokuapp.com/user", {
         formData,
       });
       console.log(response);

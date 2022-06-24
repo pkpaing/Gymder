@@ -10,7 +10,7 @@ const MyProfile = ({ setShowProfile }) => {
 
   const getUser = async () => {
     try {
-      const response = await axios.get("http://localhost:8000/user", {
+      const response = await axios.get("https://gymder.herokuapp.com/user", {
         params: { userId },
       });
       setUser(response.data);
