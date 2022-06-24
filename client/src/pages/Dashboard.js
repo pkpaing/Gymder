@@ -20,7 +20,7 @@ const Dashboard = () => {
 
   const getUser = async () => {
     try {
-      const response = await axios.get("http://localhost:8000/user", {
+      const response = await axios.get("https://gymder.herokuapp.com/user", {
         params: { userId },
       });
       setUser(response.data);
@@ -31,9 +31,12 @@ const Dashboard = () => {
 
   const getFilteredUsers = async () => {
     try {
-      const response = await axios.get("http://localhost:8000/filtered-users", {
-        params: { location: user?.gym_location },
-      });
+      const response = await axios.get(
+        "https://gymder.herokuapp.com/filtered-users",
+        {
+          params: { location: user?.gym_location },
+        }
+      );
       setFilteredUsers(response.data);
     } catch (error) {
       console.log(error);
@@ -52,7 +55,7 @@ const Dashboard = () => {
 
   const updateMatches = async (matchedUserId) => {
     try {
-      await axios.put("http://localhost:8000/addmatch", {
+      await axios.put("https://gymder.herokuapp.com/addmatch", {
         userId,
         matchedUserId,
       });
