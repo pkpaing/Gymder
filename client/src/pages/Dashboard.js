@@ -98,10 +98,6 @@ const Dashboard = () => {
     setCardUser(filteredUsers2[filteredUsers2.length - cardCounter]);
   };
 
-  if (filteredUsers2) {
-    console.log("cardUser", cardUser);
-  }
-
   return (
     <>
       {user && (

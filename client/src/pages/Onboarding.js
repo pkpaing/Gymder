@@ -162,7 +162,7 @@ const Onboarding = () => {
                 name="gender_identity"
                 value={"Male"}
                 onChange={handleChange}
-                checked={formData.gender_identity === "male"}
+                checked={formData.gender_identity === "Male"}
               />
               <label htmlFor="man-gender-identity">Male</label>
 
@@ -172,10 +172,11 @@ const Onboarding = () => {
                 name="gender_identity"
                 value={"Female"}
                 onChange={handleChange}
-                checked={formData.gender_identity === "female"}
+                checked={formData.gender_identity === "Female"}
               />
               <label htmlFor="woman-gender-identity">Female</label>
             </div>
+
             <label htmlFor="about">About Me</label>
             <input
               id="about"
