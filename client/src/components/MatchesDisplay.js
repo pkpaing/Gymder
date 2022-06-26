@@ -30,11 +30,11 @@ const MatchesDisplay = ({ matches, setClickedUser }) => {
         .length > 0
   );
 
-  console.log(matchedProfiles);
+  console.log(filteredMatchedProfiles);
 
   return (
     <div className="matches-display">
-      {matchedProfiles?.map((match) => (
+      {filteredMatchedProfiles?.map((match) => (
         <div
           key={match.user_id}
           className="match-card"
