@@ -244,6 +244,15 @@ nav .logo-container .logo{
     width: 100%;
 }
 
+.onboarding .side-by-side{
+    display: flex;
+    flex-direction: row;
+}
+
+.onboarding .dash{
+    font-size: 42px;
+}
+
 /* -----Dashboard----- */
 
 .dashboard {

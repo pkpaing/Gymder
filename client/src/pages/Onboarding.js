@@ -204,6 +204,105 @@ const Onboarding = () => {
               <img src={formData.url1} alt="profile pic preview" />
             )}
           </section>
+          <section>
+            <h3>PREFERENCES</h3>
+            <label>Gym Location</label>
+            <div className="multiple-input-container">
+              <input
+                id="north-gym-location"
+                type="radio"
+                name="gym_location"
+                value={"North"}
+                onChange={null}
+                checked={null}
+              />
+              <label htmlFor="north-gym-location">North</label>
+
+              <input
+                id="east-gym-location"
+                type="radio"
+                name="gym_location"
+                value={"East"}
+                onChange={null}
+                checked={null}
+              />
+              <label htmlFor="east-gym-location">East</label>
+
+              <input
+                id="south-gym-location"
+                type="radio"
+                name="gym_location"
+                value={"South"}
+                onChange={null}
+                checked={null}
+              />
+              <label htmlFor="south-gym-location">South</label>
+
+              <input
+                id="west-gym-location"
+                type="radio"
+                name="gym_location"
+                value={"West"}
+                onChange={null}
+                checked={null}
+              />
+              <label htmlFor="west-gym-location">West</label>
+
+              <input
+                id="central-gym-location"
+                type="radio"
+                name="gym_location"
+                value={"Central"}
+                onChange={null}
+                checked={null}
+              />
+              <label htmlFor="central-gym-location">Central</label>
+            </div>
+            <label>Gender</label>
+            <div className="multiple-input-container">
+              <input
+                id="man-gender-identity"
+                type="radio"
+                name="gender_identity"
+                value={"Male"}
+                onChange={null}
+                checked={null}
+              />
+              <label htmlFor="man-gender-identity">Male</label>
+
+              <input
+                id="woman-gender-identity"
+                type="radio"
+                name="gender_identity"
+                value={"Female"}
+                onChange={null}
+                checked={null}
+              />
+              <label htmlFor="woman-gender-identity">Female</label>
+            </div>
+            <label>Age Range</label>
+            <div className="side-by-side">
+              <input
+                id="age_lower"
+                type="number"
+                name="age_lower"
+                placeholder="... "
+                required={true}
+                onChange={null}
+                checked={null}
+              />
+              <div className="dash">—</div>
+              <input
+                id="age_upper"
+                type="number"
+                name="age_upper"
+                placeholder="... "
+                required={true}
+                onChange={null}
+                checked={null}
+              />
+            </div>
+          </section>
         </form>
       </div>
     </>
