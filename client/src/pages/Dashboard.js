@@ -1,5 +1,5 @@
 import TinderCard from "react-tinder-card";
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
 import { useCookies } from "react-cookie";
 import ChatContainer from "../components/ChatContainer";
 import axios from "axios";
@@ -114,6 +114,8 @@ const Dashboard = () => {
                   key={character.user_id}
                   onSwipe={(dir) => swiped(dir, character.user_id)}
                   onCardLeftScreen={() => outOfFrame(character.first_name)}
+                  preventSwipe={["up", "down"]}
+                  flickOnSwipe={true}
                 >
                   <div
                     style={{ backgroundImage: "url(" + character.url1 + ")" }}
@@ -131,7 +133,11 @@ const Dashboard = () => {
               ))}
 
               <div className="swipe-info">
-                {lastDirection ? <p>You swiped {lastDirection}</p> : <p />}
+                {lastDirection === "right" || lastDirection === "left" ? (
+                  <p>You swiped {lastDirection}</p>
+                ) : (
+                  <p />
+                )}
               </div>
             </div>
           </div>
