@@ -5,6 +5,7 @@ import ChatContainer from "../components/ChatContainer";
 import axios from "axios";
 import MoreInfo from "../components/MoreInfo";
 import MyProfile from "../components/MyProfile";
+import { useNavigate } from "react-router-dom";
 
 const Dashboard = () => {
   const [user, setUser] = useState(null);
@@ -98,6 +99,12 @@ const Dashboard = () => {
     setCardUser(filteredUsers2[filteredUsers2.length - cardCounter]);
   };
 
+  let navigate = useNavigate();
+
+  const toEditProfile = () => {
+    navigate("/EditProfile");
+  };
+
   return (
     <>
       {user && (
@@ -105,7 +112,10 @@ const Dashboard = () => {
           <ChatContainer user={user} />
           <div className="swipe-container">
             <button className="quartenary-button" onClick={handleClickProfile}>
-              View My Profile
+              Edit My Profile
+            </button>
+            <button className="sixery-button" onClick={handleClickProfile}>
+              Edit My Preferences
             </button>
             <div className="card-container">
               {filteredUsers2?.map((character) => (
