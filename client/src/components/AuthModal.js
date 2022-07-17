@@ -48,7 +48,12 @@ const AuthModal = ({ setShowModal, isSignUp }) => {
 
       window.location.reload();
     } catch (error) {
-      setError("No such account! Please sign up");
+      setLoading(false);
+      if (isSignUp) {
+        setError("Account already exists!");
+      } else {
+        setError("No such account!");
+      }
       console.log(error);
     }
   };

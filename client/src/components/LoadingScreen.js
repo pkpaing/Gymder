@@ -10,9 +10,6 @@ const LoadingScreen = ({ setLoading }) => {
 
   return (
     <div className="loading-screen">
-      <div className="loading-close-icon" onClick={handleClick}>
-        ✘
-      </div>
       <img
         className="loading-gif"
         src={loadingGif}

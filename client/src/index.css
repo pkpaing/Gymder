@@ -170,7 +170,7 @@ nav .logo-container .logo{
     top: 405px;
     left: 600px;
     width: 150px;
-    height: 150px;
+    height: 100px;
     background-color: rgb(255, 255, 255);
     border-radius: 10px;
     border: solid 2px;
@@ -182,9 +182,9 @@ nav .logo-container .logo{
 }
 
 .loading-screen .loading-gif {
-    position: fixed;
-    right: 535px;
-    top: 465px;
+    position: relative;
+    right: 114px;
+    bottom: 45px;
     width: 375px;
     margin: 0px;
 }
