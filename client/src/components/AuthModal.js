@@ -2,6 +2,7 @@ import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
+import LoadingScreen from "./LoadingScreen";
 
 const AuthModal = ({ setShowModal, isSignUp }) => {
   const [email, setEmail] = useState(null);
@@ -9,6 +10,7 @@ const AuthModal = ({ setShowModal, isSignUp }) => {
   const [confirmPassword, setConfirmPassword] = useState(null);
   const [error, setError] = useState(null);
   const [cookies, setCookie, removeCookie] = useCookies(null);
+  const [loading, setLoading] = useState(false);
 
   let navigate = useNavigate();
 
@@ -24,6 +26,8 @@ const AuthModal = ({ setShowModal, isSignUp }) => {
       if (isSignUp && password !== confirmPassword) {
         setError("Passwords need to match!");
         return;
+      } else {
+        setLoading(true);
       }
 
       const response = await axios.post(
@@ -44,6 +48,7 @@ const AuthModal = ({ setShowModal, isSignUp }) => {
 
       window.location.reload();
     } catch (error) {
+      setError("No such account! Please sign up");
       console.log(error);
     }
   };
@@ -86,6 +91,7 @@ const AuthModal = ({ setShowModal, isSignUp }) => {
         <p>{error}</p>
       </form>
       <hr />
+      {loading && <LoadingScreen setLoading={setLoading} />}
     </div>
   );
 };
