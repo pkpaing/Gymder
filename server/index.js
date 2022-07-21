@@ -4,20 +4,73 @@ const { v4: uuidv4 } = require("uuid");
 const jwt = require("jsonwebtoken");
 const cors = require("cors");
 const bcrypt = require("bcrypt");
+const multer = require("multer");
 require("dotenv").config();
+
+const PORT = 8000;
+
+express().use((req, res, next) => {
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept"
+  );
+  res.setHeader(
+    "Access-Control-Allow-Methods",
+    "GET, POST, PATCH, PUT, DELETE, OPTIONS"
+  );
+  next();
+});
+
+express().options("/*", (_, res) => {
+  res.sendStatus(200);
+});
+
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, "./uploads");
+  },
+  filename: function (req, file, cb) {
+    cb(null, uuidv4() + "-" + Date.now() + path.extname(file.originalname));
+  },
+});
+
+const fileFilter = (req, file, cb) => {
+  const allowedFileTypes = ["image/jpeg", "image/jpg", "image/png"];
+  if (allowedFileTypes.includes(file.mimetype)) {
+    cb(null, true);
+  } else {
+    cb(null, false);
+  }
+};
+
+let upload = multer({ storage, fileFilter });
+
+express().post("/image", (req, res) => {
+  upload(req, res, (err) => {
+    if (err) {
+      res.status(400).send("Something went wrong!");
+    }
+    res.send(req.file);
+  });
+});
+
+express().get("/image/:fileName", function (req, res) {
+  const filePath = res.sendFile(filePath); // find out the filePath based on given fileName
+});
 
 const uri =
   "mongodb+srv://pkpaing:gymder123@cluster0.4ta7f.mongodb.net/Cluster0?retryWrites=true&w=majority";
 
 const app = express();
-app.use(cors());
-app.use(express.json());
+express().use(cors());
+express().use(express.json());
 
-app.get("/", (req, res) => {
+express().get("/", (req, res) => {
   res.json("Hello to my app");
 });
 
-app.post("/signup", async (req, res) => {
+express().post("/signup", async (req, res) => {
   const client = new MongoClient(uri);
   const { email, password } = req.body;
 
@@ -58,7 +111,7 @@ app.post("/signup", async (req, res) => {
   }
 });
 
-app.post("/login", async (req, res) => {
+express().post("/login", async (req, res) => {
   const client = new MongoClient(uri);
   const { email, password } = req.body;
 
@@ -90,7 +143,7 @@ app.post("/login", async (req, res) => {
   }
 });
 
-app.get("/user", async (req, res) => {
+express().get("/user", async (req, res) => {
   const client = new MongoClient(uri);
   const userId = req.query.userId;
 
@@ -107,15 +160,25 @@ app.get("/user", async (req, res) => {
   }
 });
 
-app.get("/filtered-users", async (req, res) => {
+express().get("/filtered-users", async (req, res) => {
   const client = new MongoClient(uri);
-  const location = req.query.location;
+  const location_pref = req.query.location_pref;
+  const gender_pref = req.query.gender_pref;
 
   try {
     await client.connect();
     const database = client.db("app-data");
     const users = database.collection("users");
-    const query = { gym_location: { $eq: location } };
+    const query = {
+      $and: [
+        {
+          gym_location: { $in: location_pref },
+        },
+        {
+          gender_identity: { $in: gender_pref },
+        },
+      ],
+    };
     const foundUsers = await users.find(query).toArray();
     res.json(foundUsers);
   } finally {
@@ -123,7 +186,8 @@ app.get("/filtered-users", async (req, res) => {
   }
 });
 
-app.put("/user", async (req, res) => {
+express().put("/user", async (req, res) => {
+  console.log("im here");
   const client = new MongoClient(uri);
   const formData = req.body.formData;
 
@@ -143,12 +207,16 @@ app.put("/user", async (req, res) => {
         years_experience: formData.years_experience,
         gender_identity: formData.gender_identity,
         url1: formData.url1,
+        image: formData.image,
         about: formData.about,
         matches: formData.matches,
+        location_pref: formData.location_pref,
+        gender_pref: formData.gender_pref,
       },
     };
 
     const insertedUser = await users.updateOne(query, updateDocument);
+    console.log(insertedUser);
 
     res.json(insertedUser);
   } finally {
@@ -156,7 +224,7 @@ app.put("/user", async (req, res) => {
   }
 });
 
-app.get("/read", async (req, res) => {
+express().get("/read", async (req, res) => {
   const client = new MongoClient(uri);
 
   try {
@@ -171,7 +239,7 @@ app.get("/read", async (req, res) => {
   }
 });
 
-app.get("/users", async (req, res) => {
+express().get("/users", async (req, res) => {
   const client = new MongoClient(uri);
   const userIds = JSON.parse(req.query.userIds);
 
@@ -197,7 +265,7 @@ app.get("/users", async (req, res) => {
   }
 });
 
-app.put("/addmatch", async (req, res) => {
+express().put("/addmatch", async (req, res) => {
   const client = new MongoClient(uri);
   const { userId, matchedUserId } = req.body;
 
@@ -217,7 +285,7 @@ app.put("/addmatch", async (req, res) => {
   }
 });
 
-app.get("/messages", async (req, res) => {
+express().get("/messages", async (req, res) => {
   const client = new MongoClient(uri);
   const { userId, correspondingUserId } = req.query;
 
@@ -238,7 +306,7 @@ app.get("/messages", async (req, res) => {
   }
 });
 
-app.post("/message", async (req, res) => {
+express().post("/message", async (req, res) => {
   const client = new MongoClient(uri);
   const message = req.body.message;
 
@@ -254,6 +322,4 @@ app.post("/message", async (req, res) => {
   }
 });
 
-app.listen(process.env.PORT, () =>
-  console.log("Server running on PORT " + process.env.PORT)
-);
+express().listen(PORT, () => console.log("Server running on PORT " + PORT));

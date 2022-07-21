@@ -5,6 +5,8 @@ import ChatContainer from "../components/ChatContainer";
 import axios from "axios";
 import MoreInfo from "../components/MoreInfo";
 import MyProfile from "../components/MyProfile";
+import MyPreferences from "../components/MyPreferences";
+import qs from "qs";
 import { useNavigate } from "react-router-dom";
 
 const Dashboard = () => {
@@ -15,6 +17,7 @@ const Dashboard = () => {
   const [lastDirection, setLastDirection] = useState();
   const [showInfo, setShowInfo] = useState(false);
   const [showProfile, setShowProfile] = useState(false);
+  const [showPreferences, setShowPreferences] = useState(false);
 
   const userId = cookies.UserId;
   let cardCounter = 1;
@@ -35,7 +38,13 @@ const Dashboard = () => {
       const response = await axios.get(
         "https://gymder.herokuapp.com/filtered-users",
         {
-          params: { location: user?.gym_location },
+          params: {
+            location: user?.location_pref,
+            gender: user?.gender_pref,
+          },
+          paramsSerializer: (params) => {
+            return qs.stringify(params, { arrayFormat: "repeat" });
+          },
         }
       );
       setFilteredUsers(response.data);
@@ -88,6 +97,11 @@ const Dashboard = () => {
     setShowProfile(true);
   };
 
+  const handleClickPreferences = () => {
+    console.log("clicked");
+    setShowPreferences(true);
+  };
+
   const swiped = (direction, swipedUserId) => {
     console.log("removing: " + swipedUserId);
 
@@ -113,9 +127,7 @@ const Dashboard = () => {
           <div className="swipe-container">
             <button className="quartenary-button" onClick={handleClickProfile}>
               Edit My Profile
-            </button>
-            <button className="sixery-button" onClick={handleClickProfile}>
-              Edit My Preferences
+
             </button>
             <div className="card-container">
               {filteredUsers2?.map((character) => (
@@ -151,6 +163,9 @@ const Dashboard = () => {
               </div>
             </div>
           </div>
+          {showPreferences && (
+            <MyPreferences setShowPreferences={setShowPreferences} />
+          )}
           {showProfile && <MyProfile setShowProfile={setShowProfile} />}
           {showInfo && (
             <MoreInfo
