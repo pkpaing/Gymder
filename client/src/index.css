@@ -209,6 +209,30 @@ nav .logo-container .logo {
   margin: 0px;
 }
 
+.loading-screen {
+    position: fixed;
+    top: 405px;
+    left: 600px;
+    width: 150px;
+    height: 100px;
+    background-color: rgb(255, 255, 255);
+    border-radius: 10px;
+    border: solid 2px;
+    padding: 40px;
+}
+
+.loading-screen .loading-close-icon {
+    float: right;
+}
+
+.loading-screen .loading-gif {
+    position: relative;
+    right: 114px;
+    bottom: 45px;
+    width: 375px;
+    margin: 0px;
+}
+
 /* -----Onboarding----- */
 
 .onboarding {

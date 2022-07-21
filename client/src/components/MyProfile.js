@@ -175,6 +175,7 @@ const MyProfile = ({ setShowProfile }) => {
           ✘
         </div>
         <form onSubmit={handleSubmit}>
+          
           <section>
             <h3>PROFILES</h3>
             <div className="edit-line">

@@ -7,6 +7,7 @@ import MoreInfo from "../components/MoreInfo";
 import MyProfile from "../components/MyProfile";
 import MyPreferences from "../components/MyPreferences";
 import qs from "qs";
+import { useNavigate } from "react-router-dom";
 
 const Dashboard = () => {
   const [user, setUser] = useState(null);
@@ -112,6 +113,12 @@ const Dashboard = () => {
     setCardUser(filteredUsers2[filteredUsers2.length - cardCounter]);
   };
 
+  let navigate = useNavigate();
+
+  const toEditProfile = () => {
+    navigate("/EditProfile");
+  };
+
   return (
     <>
       {user && (
@@ -120,6 +127,7 @@ const Dashboard = () => {
           <div className="swipe-container">
             <button className="quartenary-button" onClick={handleClickProfile}>
               Edit My Profile
+
             </button>
             <div className="card-container">
               {filteredUsers2?.map((character) => (
