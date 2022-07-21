@@ -20,7 +20,7 @@ const ChatInput = ({
     };
 
     try {
-      await axios.post("https://gymder.herokuapp.com/message", { message });
+      await axios.post("http://localhost:8000/message", { message });
       getUsersMessages();
       getClickedUsersMessages();
       setTextArea("");

@@ -6,6 +6,8 @@ import { useNavigate } from "react-router-dom";
 
 const Onboarding = () => {
   const [cookies, setCookie, removeCookie] = useCookies(null);
+  const [genderPref, setGenderPref] = useState([]);
+  const [locationPref, setLocationPref] = useState([]);
   const [formData, setFormData] = useState({
     user_id: cookies.UserId,
     first_name: "",
@@ -14,9 +16,11 @@ const Onboarding = () => {
     training_type: "",
     years_experience: "",
     gender_identity: "Male",
-    url1: "",
+    image: "",
     about: "",
     matches: [],
+    location_pref: [],
+    gender_pref: [],
   });
 
   let navigate = useNavigate();
@@ -25,7 +29,7 @@ const Onboarding = () => {
     console.log("submitted");
     e.preventDefault();
     try {
-      const response = await axios.put("https://gymder.herokuapp.com/user", {
+      const response = await axios.put("http://localhost:8000/user", {
         formData,
       });
       console.log(response);
@@ -36,14 +40,94 @@ const Onboarding = () => {
     }
   };
 
-  const handleChange = (e) => {
-    const value =
-      e.target.type === "checkbox" ? e.target.checked : e.target.value;
-    const name = e.target.name;
+  const handleCheck = (event) => {
+    const name = event.target.name;
+    const value = event.target.value;
+    if (name === "gender_pref") {
+      var updatedList = [...genderPref];
+    } else {
+      var updatedList = [...locationPref];
+    }
 
+    //console.log("value is " + value);
+    //console.log("index is " + checked.indexOf(value));
+    //console.log("checked is " + checked);
+    if (event.target.checked) {
+      updatedList = [...updatedList, value];
+    } else {
+      updatedList.splice(updatedList.indexOf(value), 1);
+    }
+
+    if (name === "gender_pref") {
+      setGenderPref(updatedList);
+    } else {
+      setLocationPref(updatedList);
+    }
+
+    console.log("updated list " + updatedList);
+    setFormData((prevState) => ({
+      ...prevState,
+      [name]: updatedList,
+    }));
+    console.log("name is " + name);
+    console.log("gender pref after is " + formData.gender_pref);
+    console.log("location pref after is " + formData.location_pref);
+  };
+
+  const loadFile = (e) => {
+    var output = document.getElementById("output");
+    output.src = URL.createObjectURL(e.target.files[0]);
+    output.onload = function () {
+      URL.revokeObjectURL(output.src); // free memory
+    };
+    setFormData((prevState) => ({
+      ...prevState,
+      ["image"]: output.src,
+    }));
+    console.log(output.src);
+  };
+
+  const handleChange = (e) => {
+    if (e.target.type === "checkbox") {
+      checkedChange(e);
+    } else if (e.target.type === "file") {
+      imageChange(e);
+    } else {
+      const name = e.target.name;
+      const value = e.target.value;
+      setFormData((prevState) => ({
+        ...prevState,
+        [name]: value,
+      }));
+    }
+  };
+
+  const imageChange = (e) => {
+    loadFile(e);
+    const name = e.target.name;
+    const value = URL.createObjectURL(e.target.files[0]);
+    console.log("name is " + name);
+    console.log("value is " + value);
     setFormData((prevState) => ({
       ...prevState,
       [name]: value,
+    }));
+  };
+
+  const checkedChange = (e) => {
+    const value = e.target.value;
+    const isChecked = e.target.checked;
+    const name = e.target.name;
+    const newValue = isChecked;
+
+    console.log("value " + value);
+    console.log("isChecked " + isChecked);
+    console.log("name " + name);
+    console.log("form data is " + newValue);
+
+    setFormData((prevState) => ({
+      ...prevState,
+      [name]: isChecked,
     }));
   };
 
@@ -189,72 +273,69 @@ const Onboarding = () => {
             />
             <input type="submit" />
           </section>
-
           <section>
             <label htmlFor="about">Profile Photo</label>
             <input
-              type="url"
-              name="url1"
-              id="url"
-              onChange={handleChange}
-              required={true}
+              id="image"
+              name="image"
+              type="file"
+              accept="image/*"
+              onChange={imageChange}
             />
-            <div className="photo-container"></div>
-            {formData.url1 && (
-              <img src={formData.url1} alt="profile pic preview" />
-            )}
+            <div className="photo-container">{<img id="output" />}</div>
           </section>
+
           <section>
             <h3>PREFERENCES</h3>
             <label>Gym Location</label>
             <div className="multiple-input-container">
               <input
                 id="north-gym-location"
-                type="radio"
-                name="gym_location"
+                type="checkbox"
+                name="location_pref"
                 value={"North"}
-                onChange={null}
-                checked={null}
+                onChange={handleCheck}
+                checked={formData.north_pref}
               />
               <label htmlFor="north-gym-location">North</label>
 
               <input
                 id="east-gym-location"
-                type="radio"
-                name="gym_location"
+                type="checkbox"
+                name="location_pref"
                 value={"East"}
-                onChange={null}
-                checked={null}
+                onChange={handleCheck}
+                checked={formData.east_pref}
               />
               <label htmlFor="east-gym-location">East</label>
 
               <input
                 id="south-gym-location"
-                type="radio"
-                name="gym_location"
+                type="checkbox"
+                name="location_pref"
                 value={"South"}
-                onChange={null}
-                checked={null}
+                onChange={handleCheck}
+                checked={formData.south_pref}
               />
               <label htmlFor="south-gym-location">South</label>
 
               <input
                 id="west-gym-location"
-                type="radio"
-                name="gym_location"
+                type="checkbox"
+                name="location_pref"
                 value={"West"}
-                onChange={null}
-                checked={null}
+                onChange={handleCheck}
+                checked={formData.west_pref}
               />
               <label htmlFor="west-gym-location">West</label>
 
               <input
                 id="central-gym-location"
-                type="radio"
-                name="gym_location"
+                type="checkbox"
+                name="location_pref"
                 value={"Central"}
-                onChange={null}
-                checked={null}
+                onChange={handleCheck}
+                checked={formData.central_pref}
               />
               <label htmlFor="central-gym-location">Central</label>
             </div>
@@ -262,45 +343,23 @@ const Onboarding = () => {
             <div className="multiple-input-container">
               <input
                 id="man-gender-identity"
-                type="radio"
-                name="gender_identity"
+                type="checkbox"
+                name="gender_pref"
                 value={"Male"}
-                onChange={null}
-                checked={null}
+                onChange={handleCheck}
+                checked={formData.male_pref}
               />
               <label htmlFor="man-gender-identity">Male</label>
 
               <input
                 id="woman-gender-identity"
-                type="radio"
-                name="gender_identity"
+                type="checkbox"
+                name="gender_pref"
                 value={"Female"}
-                onChange={null}
-                checked={null}
+                onChange={handleCheck}
+                checked={formData.female_pref}
               />
               <label htmlFor="woman-gender-identity">Female</label>
-            </div>
-            <label>Age Range</label>
-            <div className="side-by-side">
-              <input
-                id="age_lower"
-                type="number"
-                name="age_lower"
-                placeholder="... "
-                required={true}
-                onChange={null}
-                checked={null}
-              />
-              <div className="dash">—</div>
-              <input
-                id="age_upper"
-                type="number"
-                name="age_upper"
-                placeholder="... "
-                required={true}
-                onChange={null}
-                checked={null}
-              />
             </div>
           </section>
         </form>

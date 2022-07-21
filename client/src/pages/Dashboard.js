@@ -5,6 +5,8 @@ import ChatContainer from "../components/ChatContainer";
 import axios from "axios";
 import MoreInfo from "../components/MoreInfo";
 import MyProfile from "../components/MyProfile";
+import MyPreferences from "../components/MyPreferences";
+import qs from "qs";
 
 const Dashboard = () => {
   const [user, setUser] = useState(null);
@@ -14,13 +16,14 @@ const Dashboard = () => {
   const [lastDirection, setLastDirection] = useState();
   const [showInfo, setShowInfo] = useState(false);
   const [showProfile, setShowProfile] = useState(false);
+  const [showPreferences, setShowPreferences] = useState(false);
 
   const userId = cookies.UserId;
   let cardCounter = 1;
 
   const getUser = async () => {
     try {
-      const response = await axios.get("https://gymder.herokuapp.com/user", {
+      const response = await axios.get("http://localhost:8000/user", {
         params: { userId },
       });
       setUser(response.data);
@@ -31,12 +34,15 @@ const Dashboard = () => {
 
   const getFilteredUsers = async () => {
     try {
-      const response = await axios.get(
-        "https://gymder.herokuapp.com/filtered-users",
-        {
-          params: { location: user?.gym_location },
-        }
-      );
+      const response = await axios.get("http://localhost:8000/filtered-users", {
+        params: {
+          location: user?.location_pref,
+          gender: user?.gender_pref,
+        },
+        paramsSerializer: (params) => {
+          return qs.stringify(params, { arrayFormat: "repeat" });
+        },
+      });
       setFilteredUsers(response.data);
     } catch (error) {
       console.log(error);
@@ -55,7 +61,7 @@ const Dashboard = () => {
 
   const updateMatches = async (matchedUserId) => {
     try {
-      await axios.put("https://gymder.herokuapp.com/addmatch", {
+      await axios.put("http://localhost:8000/addmatch", {
         userId,
         matchedUserId,
       });
@@ -87,6 +93,11 @@ const Dashboard = () => {
     setShowProfile(true);
   };
 
+  const handleClickPreferences = () => {
+    console.log("clicked");
+    setShowPreferences(true);
+  };
+
   const swiped = (direction, swipedUserId) => {
     console.log("removing: " + swipedUserId);
 
@@ -105,7 +116,7 @@ const Dashboard = () => {
           <ChatContainer user={user} />
           <div className="swipe-container">
             <button className="quartenary-button" onClick={handleClickProfile}>
-              View My Profile
+              Edit My Profile
             </button>
             <div className="card-container">
               {filteredUsers2?.map((character) => (
@@ -141,6 +152,9 @@ const Dashboard = () => {
               </div>
             </div>
           </div>
+          {showPreferences && (
+            <MyPreferences setShowPreferences={setShowPreferences} />
+          )}
           {showProfile && <MyProfile setShowProfile={setShowProfile} />}
           {showInfo && (
             <MoreInfo
